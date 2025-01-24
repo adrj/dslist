@@ -1,9 +1,15 @@
 package com.devsuperior.dslist.repositoriess;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import com.devsuperior.dslist.entities.GameList;
 
 public interface GameListRepository extends JpaRepository<GameList, Long> {
+
+    @Modifying
+    @Query(nativeQuery = true, value = "UPDATE tb_belongingSET position = :newPosition WHERE list_id= :listIdAND game_id= :gameId")
+    void updateBelongingPosition(Long listId, Long gameId, Integer newPosition);
 
 }
